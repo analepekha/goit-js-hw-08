@@ -15,7 +15,7 @@ function handleInput (event) {
     localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(userData));
 }
 
-form.addEventListener('submit', handleSubmit) 
+form.addEventListener('submit', throttle(handleSubmit, 500)) 
 
 function handleSubmit (event) {
     event.preventDefault()
@@ -24,9 +24,17 @@ function handleSubmit (event) {
         alert("Please, fill in all fields");
     }
     const formData = new FormData(form)
-        formData.forEach((value, name) => { userData[name] = value });
+    formData.forEach((value, name) => { userData[name] = value });
     console.log(userData);
     event.currentTarget.reset();
-    // localStorage.removeItem(LOCALSTORAGE_KEY)
+    localStorage.removeItem(LOCALSTORAGE_KEY)
 }
 
+function unitForm () {
+    const previousData = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY))
+    if (previousData) {
+        email.value = previousData.email
+        message.value=previousData.message 
+        }
+}
+unitForm()
