@@ -1,3 +1,4 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const throttle = require('lodash.throttle');
 
 const form = document.querySelector('.feedback-form');
@@ -16,11 +17,16 @@ form.addEventListener('submit', throttleFn)
 
 function handleSubmit (event) {
     event.preventDefault()
+    if (email.value === "" || message.value === "") {
+        Notify.failure('Please fill in all fields');
+        return
+    }
     const formData = new FormData(form)
     formData.forEach((value, name) => { userData[name] = value })
     console.log(userData);
     event.currentTarget.reset()
     localStorage.removeItem(LOCALSTORAGE_KEY)
+    Notify.success('Data was sent')
 }
 
 form.addEventListener('input', handleInput)
