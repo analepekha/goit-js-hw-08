@@ -26,6 +26,7 @@ function handleSubmit (event) {
     console.log(userData);
     event.currentTarget.reset()
     localStorage.removeItem(LOCALSTORAGE_KEY)
+    userData = {}
     Notify.success('Data was sent')
 }
 
@@ -46,4 +47,3 @@ function initForm() {
         })
 }
 }
-
